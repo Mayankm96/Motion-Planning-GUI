@@ -1,11 +1,7 @@
-# README
-
 included:
-> All source files (.m)
-
+> All source files (.m) in directory `GUI`
 > this README
-
-> References (.pdf)
+> All references (.pdf) in directory `References`
 
 # Motion Planning GUI
 
@@ -22,10 +18,12 @@ The reference papers used to learn about the algorithms can be found out in the 
 ## How to use:
 
 1. Clone this repository to your computer. 
-_Note:_ Ensure you have MATLAB installed. For best results, it is preferred you use MATLAB 2016a or any newer versions.
+_Note:_ Ensure you have MATLAB installed (for best results, it is preferred to use MATLAB 2016a or any other newer version)
 
-2. Add path of this directory to your MATLAB. 
-3. Run the file `Simple_GUI.m`.
+2. Add path of this directory to your MATLAB using the command:
+```addpath('<path-to-directory>/GUI')```
+
+3. Run the file `../GUI/simple_gui.m` to start the interface designed
 
 ## Current Algorithms Available:
 1. Rapidly Exploring Random Tree with one seed at start location

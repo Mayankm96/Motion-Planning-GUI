@@ -13,8 +13,7 @@ __Contributor: [Mayank Mittal](http://mayankm96.github.io)__
 
 This repository contains a GUI to test out various motion planning algorithms. The GUI allows you to define your own start and goal locations.
 
-{:.center}
-![alt text](https://github.com/Mayankm96/Motion-Planning-GUI/blob/master/Images/sample_gui.PNG "Sample GUI" =400x400)
+<img align="center" src="https://github.com/Mayankm96/Motion-Planning-GUI/blob/master/Images/sample_gui.PNG" alt="Sample GUI" height="400" width="400">
 
 The reference papers used to learn about the algorithms can be found out in the folder 'References'.
 
@@ -41,9 +40,3 @@ _Note:_ Ensure you have MATLAB installed. For best results, it is preferred you 
 - Enable creation of obstacles 
 - Improve the stop button
 - Use dropdown list instead of listbox
-
-<style type="text/css">
-.center {
-  text-align: center;
-}
-</style>

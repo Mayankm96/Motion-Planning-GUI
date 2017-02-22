@@ -21,7 +21,9 @@ The reference papers used to learn about the algorithms can be found out in the 
 _Note:_ Ensure you have MATLAB installed (for best results, it is preferred to use MATLAB 2016a or any other newer version)
 
 2. Add path of this directory to your MATLAB using the command:
-```addpath('<path-to-directory>/GUI')```
+```
+addpath('<path-to-directory>/GUI')
+```
 
 3. Run the file `../GUI/simple_gui.m` to start the interface designed
 

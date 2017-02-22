@@ -2,7 +2,9 @@
 
 included:
 > All source files (.m)
+
 > this README
+
 > References (.pdf)
 
 # Motion Planning GUI
@@ -11,7 +13,7 @@ __Contributor: [Mayank Mittal](http://mayankm96.github.io)__
 
 This repository contains a GUI to test out various motion planning algorithms. The GUI allows you to define your own start and goal locations.
 
-![alt text](https://github.com/mayankm96/Motion_Planning_GUI/Images/sample_gui.png "Sample GUI")
+![alt text](https://github.com/Mayankm96/Motion-Planning-GUI/blob/master/Images/sample_gui.PNG "Sample GUI")
 
 The reference papers used to learn about the algorithms can be found out in the folder 'References'.
 

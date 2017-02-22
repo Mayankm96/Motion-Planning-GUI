@@ -1,7 +1,8 @@
 function varargout = simple_gui(varargin)
 % SIMPLE_GUI MATLAB code for simple_gui.fig      
 % Last Modified by GUIDE v2.5 22-Feb-2017 09:26:28
-
+addpath('RRTree');
+addpath('Map');
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...

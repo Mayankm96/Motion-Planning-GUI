@@ -31,7 +31,7 @@ _Note:_ Ensure you have MATLAB installed. For best results, it is preferred you 
 1. Rapidly Exploring Random Tree with one seed at start location
 2. Rapidly Exploring Random Tree with two seeds at start and goal locations respectively
 
-## Todos
+## Todos:
 
 ### Algorithms to be added:
 - Potential Method

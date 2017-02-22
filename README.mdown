@@ -1,6 +1,8 @@
 included:
  > All source files (.m) in directory `GUI`
+ 
  > this README
+ 
  > All references (.pdf) in directory `References`
 
 # Motion Planning GUI

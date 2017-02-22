@@ -20,10 +20,7 @@ The reference papers used to learn about the algorithms can be found out in the 
 1. Clone this repository to your computer. 
 _Note:_ Ensure you have MATLAB installed (for best results, it is preferred to use MATLAB 2016a or any other newer version)
 
-2. Add path of this directory to your MATLAB using the command:
-```
-addpath('<path-to-directory>/GUI')
-```
+2. Add path of this directory typing the command `addpath('<path-to-directory>/GUI')` on the MATLAB command window
 3. Run the file `../GUI/simple_gui.m` to start the interface designed
 
 ## Current Algorithms Available:

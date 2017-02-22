@@ -24,7 +24,6 @@ _Note:_ Ensure you have MATLAB installed (for best results, it is preferred to u
 ```
 addpath('<path-to-directory>/GUI')
 ```
-
 3. Run the file `../GUI/simple_gui.m` to start the interface designed
 
 ## Current Algorithms Available:

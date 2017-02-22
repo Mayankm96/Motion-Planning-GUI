@@ -31,11 +31,12 @@ _Note:_ Ensure you have MATLAB installed. For best results, it is preferred you 
 
 ## Todos
 
-###Algorithms to be added:
+### Algorithms to be added:
 - Potential Method
 - Bug Tangent Algorithm
 - Graph-based Algorithm like A*, Crossfire
-###Improve GUI features:
+
+### Improve GUI features:
 - Enable creation of obstacles 
 - Improve the stop button
 - Use dropdown list instead of listbox

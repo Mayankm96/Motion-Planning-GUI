@@ -1,15 +1,11 @@
-# README
-
 included:
-> All source files (.m)
-
-> this README
-
-> References (.pdf)
+ - All source files (.m) in directory `GUI`
+ - this README
+ - All references (.pdf) in directory `References`
 
 # Motion Planning GUI
 
-__Contributor: [Mayank Mittal](http://mayankm96.github.io)__
+__Contributor:__ [Mayank Mittal](http://mayankm96.github.io)
 
 This repository contains a GUI to test out various motion planning algorithms. The GUI allows you to define your own start and goal locations.
 
@@ -22,16 +18,16 @@ The reference papers used to learn about the algorithms can be found out in the 
 ## How to use:
 
 1. Clone this repository to your computer. 
-_Note:_ Ensure you have MATLAB installed. For best results, it is preferred you use MATLAB 2016a or any newer versions.
+_Note:_ Ensure you have MATLAB installed (for best results, it is preferred to use MATLAB 2016a or any other newer version)
 
-2. Add path of this directory to your MATLAB. 
-3. Run the file `Simple_GUI.m`.
+2. Add path of this directory typing the command `addpath('<path-to-directory>/GUI')` on the MATLAB command window
+3. Run the file `../GUI/simple_gui.m` to start the interface designed
 
 ## Current Algorithms Available:
 1. Rapidly Exploring Random Tree with one seed at start location
 2. Rapidly Exploring Random Tree with two seeds at start and goal locations respectively
 
-## Todos
+## Todos:
 
 ### Algorithms to be added:
 - Potential Method

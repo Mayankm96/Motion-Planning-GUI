@@ -8,27 +8,27 @@ classdef RRT < handle
         start=[0;0];
         goal=[500;500];
         radius=10;
-        dt=10;
+        Obstacles=[];
     end
     
     methods
-        function Tree=RRT(S,G,r,dt)
+        function Tree=RRT(S,G,r,O)
             Tree.start=S;
             Tree.goal=G;
             Tree.nodes{1}=S;
             Tree.radius=r;
-            Tree.dt=dt;
+            Tree.Obstacles=O;
         end
-        function i=buildTree(Tree,Obstacles,i,fc,pf)
+        function i=buildTree(Tree,i,fc,pf)
         %Builds a tree from the defined start point to goal point
         %   Obstacles is an array of obstacles defined
         %   pf is Plot Flag which is 1 to see the growing tree
             x_rand=Tree.random_state(1000);
             x_near=Tree.nearest_neighbour(x_rand);
-            [x_new,u,Tree.dt]=Tree.new_state(x_rand,x_near);
-            if( ~Tree.isInGraph(x_new) && ~Tree.isColliding(x_new,Obstacles))
+            [x_new,u]=Tree.new_state(x_rand,x_near);
+            if ~Tree.isInGraph(x_new)
                 Tree.nodes{i}=x_new;
-                Tree.edges{i-1}={x_near,u,Tree.dt,x_new};
+                Tree.edges{i-1}={x_near,u,x_new};
                 if pf==1
                     plot([x_new(1); x_near(1)],[x_new(2); x_near(2)],fc)
                     hold on
@@ -41,11 +41,11 @@ classdef RRT < handle
         function showPath(Tree,fc)
         %Displays path from given state back to the start
         %   S: Start point
-        %   edges: list of all edges of graph {x_i, u, dt, x_i+1}
+        %   edges: list of all edges of graph {x_i, u, x_i+1}
         i=length(Tree.edges);
         x=Tree.goal;
         while x~=Tree.start
-            if Tree.edges{i}{4}==x
+            if Tree.edges{i}{3}==x
                 xs=Tree.edges{i}{1};
                 plot([xs(1); x(1)],[xs(2); x(2)],fc,'LineWidth',3);
                 x=xs;
@@ -60,29 +60,13 @@ classdef RRT < handle
         x=Tree.nodes{i};
         if norm(x-Tree.goal)<=Tree.radius
             Tree.nodes{i+1}=Tree.goal;
-            u=[1, fulltan(Tree.goal(2)-x(2),Tree.goal(1)-x(1))];
-            Tree.edges{i}={x,u,Tree.dt,Tree.goal};
+            u=[norm(Tree.goal-x), fulltan(Tree.goal(2)-x(2),Tree.goal(1)-x(1))];
+            Tree.edges{i}={x,u,Tree.goal};
             flag=1;
         else
             flag=0;
         end
         end
-        %function Tree2=copy2Tree(Tree1,Tree2,i)
-        %Appends nodes in Tree1 from node i to start into Tree2
-%             l=length(Tree2.nodes)+1;
-%             x=Tree1.nodes{i};
-%             while x~=Tree1.start
-%                 Tree2.nodes{l}=x;
-%                 if Tree1.edges{i}{4}==x
-%                     xs=Tree1.edges{i}{1};
-%                     u=[1, fulltan(xs(2)-x(2),xs(1)-x(1))];
-%                     Tree2.edges{l}={x,u,Tree2.dt,xs};
-%                     x=xs;
-%                 end
-%                 l=l+1;
-%                 i=i-1;
-%             end
-%        end
         function Tree2= connect(Tree1,Tree2)
         %Connects the branches of two trees if they are nearby
         %   Returns 1 if the trees got connected
@@ -99,12 +83,12 @@ classdef RRT < handle
                         k=length(Tree2.nodes);
                         Tree2.nodes{k+1}=Tree2.goal;
                         u=[1, fulltan(x2(2)-x1(2),x2(1)-x1(1))];
-                        Tree2.edges{k}={x2,u,Tree2.dt,Tree2.goal};
+                        Tree2.edges{k}={x2,u,Tree2.goal};
                         % Add connecting branch on Tree1
                         k=length(Tree1.nodes);
                         Tree1.nodes{k+1}=Tree1.goal;
                         u=[1, fulltan(x1(2)-x2(2),x1(1)-x2(1))];
-                        Tree1.edges{k}={x1,u,Tree1.dt,Tree1.goal};
+                        Tree1.edges{k}={x1,u,Tree1.goal};
                         
                         disp('Connected');
                     end
@@ -114,6 +98,24 @@ classdef RRT < handle
     end
     
     methods (Access=private)
+        function [x_new,u]= new_state(Tree,x_rand,x_near)
+        %Used to generate a new state from a given state xi
+        %   Since we are doing holonmic planning \dot(x)=f(x,u)=u 
+        %   This allows new state to be generated in any direction
+        %   Action u can be best understood as a velocity vector
+        %   u=[magnitude; angle]
+            x=[linspace(x_near(1),x_rand(1),1000);linspace(x_near(2),x_rand(2),1000)];
+            x_new=x_rand;
+            i=2;
+            while i<=length(x)
+                if Tree.isColliding(x(:,i),Tree.Obstacles)
+                    x_new=x(:,i-1);
+                    break;
+                end
+                i=i+1;
+            end
+            u=[norm(x_new-x_near), fulltan(x_new(2)-x_near(2),x_new(1)-x_near(1))];
+        end
         function flag = isInGraph(Tree,x_new)
         %Checks whether the creared node already present in graph
         %   Returns 0 if created node not in graph
@@ -137,19 +139,6 @@ classdef RRT < handle
     end
     
     methods (Static)
-        function [x_new,u,dt]= new_state(x_rand,x_near)
-        %Used to generate a new state from a given state xi
-        %   Since we are doing holonmic planning \dot(x)=f(x,u)=u with norm(u)<1
-        %   This allows new state to be generated in any direction interval dt
-        %   Action u can be best understood as a velocity vector
-        %   u=[magnitude; angle]
-            u=[1, fulltan((x_rand(2)-x_near(2)),(x_rand(1)-x_near(1)))];
-
-            %Assuming finite step time size
-            dt=10;
-            u_ac=[u(1)*cos(u(2)); u(2)*sin(u(2))];
-            x_new=x_near+u_ac*dt;
-        end
         function flag = isColliding(x,Obstacles)
         %Checks for collision between pose x and workspace obstacles
         %   Returns 1 if given configuration leads to collision

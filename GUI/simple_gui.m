@@ -3,6 +3,7 @@ function varargout = simple_gui(varargin)
 % Last Modified by GUIDE v2.5 22-Feb-2017 09:26:28
 addpath('RRTree');
 addpath('Map');
+%clc;
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -70,23 +71,22 @@ gx=str2double(get(handles.goal_x,'String'));
 gy=str2double(get(handles.goal_y,'String'));
 S=[sx;sy];
 G=[gx;gy];
-
 % Mark start and goal positions
 scatter(S(1),S(2),'g','filled');
 scatter(G(1),G(2),'r','filled');
 
 plan=get(handles.planner,'Value');
+Obstacles=drawObstacles;
+%getappdata(handles.planner,'Obstacles');
 
 if isequal(plan,1)
-    T=RRT(S,G,40,40);
-    Obstacles=drawObstacles;
-    makeTree(Obstacles,T);
+    T=RRT(S,G,40,Obstacles);
+    makeTree(T);
 end
 if isequal(plan,2)
-    T1=RRT(S,G,40,40);
-    T2=RRT(G,S,40,40);
-    Obstacles=drawObstacles;
-    makeTree(Obstacles,T1,T2);
+    T1=RRT(S,G,40,Obstacles);
+    T2=RRT(G,S,40,Obstacles);
+    makeTree(T1,T2);
 end
 
 % --- Executes during object creation, after setting all properties.
@@ -98,6 +98,7 @@ function workspace_axes_CreateFcn(hObject, ~, handles)
 %draw workspace_axes with obstacles
 workspace(1000);
 o=drawObstacles;
+%setappdata(handles.planner,'Obstacles',o);
 
 function start_x_Callback(hObject, ~, handles)
 % hObject    handle to start_x (see GCBO)
@@ -108,7 +109,6 @@ s_x=str2double(get(hObject, 'string'));
 if(isempty(s_x))
     set(hObject,'String','0');
 end
-%setappdata(0,'s_x',s_x);
 
 % --- Executes during object creation, after setting all properties.
 function start_x_CreateFcn(hObject, ~, handles)
@@ -129,7 +129,6 @@ s_y=str2double(get(hObject, 'string'));
 if(isempty(s_y))
     set(hObject,'String','0');
 end
-%setappdata(0,'s_y',s_y);
 
 % --- Executes during object creation, after setting all properties.
 function start_y_CreateFcn(hObject, ~, handles)

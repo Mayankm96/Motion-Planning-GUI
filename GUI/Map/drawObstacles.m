@@ -11,7 +11,6 @@ switch i
         rect4=plotfilledrect([800,600],800,60,90,'k');
         O=[rect1,rect2,rect3,rect4];
     case 3
-        O=[rect1,rect2,rect3,rect4];
         rect=plotfilledrect([300,750],400,100,0,'k');
         tri=plotfilledpoly([800,550],3, 125,'k');
         cir=plotfilledcircle([300,250], 110,'k');

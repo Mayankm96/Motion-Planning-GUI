@@ -1,7 +1,8 @@
 function varargout = simple_gui(varargin)
 % SIMPLE_GUI MATLAB code for simple_gui.fig      
-% Last Modified by GUIDE v2.5 24-Feb-2017 00:06:16
-
+% Last Modified by GUIDE v2.5 24-Feb-2017 00:30:04
+addpath('Map');
+addpath('RRTree');
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -253,7 +254,11 @@ function make_map_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 map=get(handles.mapper,'Value');
-
+set(handles.addob,'Visible','off');
+cla reset
+workspace(1000);
+sw1=1;
+sw2=1;
 switch map
     case 1
         Obstacles=[];
@@ -262,6 +267,24 @@ switch map
     case 3
         Obstacles=drawObstacles(3);
     case 4
+        n=0;
+        set(handles.addob,'Visible','on')
         Obstacles=[];
+        while sw1 && sw2
+            sw2=0;
+            disp('M');
+            while getappdata(handles.addob,'Value')
+                disp('O');
+            end
+            n=n+1;
+        end
 end
 setappdata(handles.make_map,'Obstacles',Obstacles);
+
+
+% --- Executes on button press in addob.
+function addob_Callback(hObject, eventdata, handles)
+% hObject    handle to addob (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+setappdata(handles.addob,'Value',1);

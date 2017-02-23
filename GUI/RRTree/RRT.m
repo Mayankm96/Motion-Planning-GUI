@@ -25,7 +25,7 @@ classdef RRT < handle
         %   pf is Plot Flag which is 1 to see the growing tree
             x_rand=Tree.random_state(1000);
             x_near=Tree.nearest_neighbour(x_rand);
-            [x_new,u]=Tree.new_state(x_rand,x_near);
+            [x_new,u]=Tree.new_state(x_rand,x_near,'dense');
             if ~Tree.isInGraph(x_new)
                 Tree.nodes{i}=x_new;
                 Tree.edges{i-1}={x_near,u,x_new};
@@ -98,7 +98,7 @@ classdef RRT < handle
     end
     
     methods (Access=private)
-        function [x_new,u]= new_state(Tree,x_rand,x_near)
+        function [x_new,u]= new_state(Tree,x_rand,x_near,mode)
         %Used to generate a new state from a given state xi
         %   Since we are doing holonmic planning \dot(x)=f(x,u)=u 
         %   This allows new state to be generated in any direction
@@ -115,6 +115,12 @@ classdef RRT < handle
                 i=i+1;
             end
             u=[norm(x_new-x_near), fulltan(x_new(2)-x_near(2),x_new(1)-x_near(1))];
+            if isequal(mode,'dense')
+                if u(1)>Tree.radius
+                    u(1)=Tree.radius;
+                end
+            end
+            x_new=x_near+[u(1)*cos(u(2));u(1)*sin(u(2))];
         end
         function flag = isInGraph(Tree,x_new)
         %Checks whether the creared node already present in graph

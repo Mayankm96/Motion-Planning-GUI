@@ -188,18 +188,34 @@ function pointer_start_Callback(hObject, eventdata, handles)
 % hObject    handle to pointer_start (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[x,y]=ginput(1);
+
+% delete the previously marked start point (if any)
+if isappdata(handles.pointer_start,'fig')
+    n=getappdata(handles.pointer_start,'fig');
+    delete(n);
+end
+
+[n,x,y]=ginputp(1);
 set(handles.start_x,'String',num2str(x));
 set(handles.start_y,'String',num2str(y));
+setappdata(handles.pointer_start,'fig',n);
 
 % --- Executes on button press in pointer_goal.
 function pointer_goal_Callback(hObject, eventdata, handles)
 % hObject    handle to pointer_goal (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[x,y]=ginput(1);
+
+% delete the previously marked goal point (if any)
+if isappdata(handles.pointer_goal,'fig')
+    n=getappdata(handles.pointer_goal,'fig');
+    delete(n);
+end
+
+[n,x,y]=ginputp(1);
 set(handles.goal_x,'String',num2str(x));
 set(handles.goal_y,'String',num2str(y));
+setappdata(handles.pointer_goal,'fig',n);
 
 % --- Executes on selection change in planner.
 function planner_Callback(hObject, eventdata, handles)

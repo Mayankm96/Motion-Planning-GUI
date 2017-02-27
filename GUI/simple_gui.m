@@ -3,6 +3,7 @@ function varargout = simple_gui(varargin)
 % Last Modified by GUIDE v2.5 27-Feb-2017 21:45:53
 addpath('Map');
 addpath('RRTree');
+
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -70,7 +71,6 @@ gx=str2double(get(handles.goal_x,'String'));
 gy=str2double(get(handles.goal_y,'String'));
 S=[sx;sy];
 G=[gx;gy];
-
 % Mark start and goal positions
 scatter(S(1),S(2),'g','filled');
 scatter(G(1),G(2),'r','filled');
@@ -307,4 +307,3 @@ function addob_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 setappdata(handles.addob,'Value',1);
-

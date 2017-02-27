@@ -80,13 +80,13 @@ Obstacles=getappdata(handles.make_map,'Obstacles');
 
 switch plan
     case 1
-    T=RRT(S,G,40,40);
-    makeTree(Obstacles,T);
+    T=RRT(S,G,20,Obstacles);
+    makeTree(T);
     
     case 2
-    T1=RRT(S,G,40,40);
-    T2=RRT(G,S,40,40);
-    makeTree(Obstacles,T1,T2);
+    T1=RRT(S,G,20,Obstacles);
+    T2=RRT(G,S,20,Obstalces);
+    makeTree(T1,T2);
 end
 
 % --- Executes during object creation, after setting all properties.

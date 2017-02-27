@@ -104,7 +104,7 @@ classdef RRT < handle
         %   This allows new state to be generated in any direction
         %   Action u can be best understood as a velocity vector
         %   u=[magnitude; angle]
-            x=[linspace(x_near(1),x_rand(1),1000);linspace(x_near(2),x_rand(2),1000)];
+            x=[linspace(x_near(1),x_rand(1),100);linspace(x_near(2),x_rand(2),100)];
             x_new=x_rand;
             i=2;
             while i<=length(x)

@@ -105,9 +105,8 @@ function start_x_Callback(hObject, ~, handles)
 
 s_x=str2double(get(hObject, 'string'));
 if(isempty(s_x))
-    set(hObject,'String','0');
+    set(hObject,'String','50');
 end
-%setappdata(0,'s_x',s_x);
 
 % --- Executes during object creation, after setting all properties.
 function start_x_CreateFcn(hObject, ~, handles)
@@ -126,9 +125,8 @@ function start_y_Callback(hObject, ~, handles)
 
 s_y=str2double(get(hObject, 'string'));
 if(isempty(s_y))
-    set(hObject,'String','0');
+    set(hObject,'String','50');
 end
-%setappdata(0,'s_y',s_y);
 
 % --- Executes during object creation, after setting all properties.
 function start_y_CreateFcn(hObject, ~, handles)
@@ -147,7 +145,7 @@ function goal_x_Callback(hObject, ~, handles)
 
 g_x=str2double(get(hObject, 'string'));
 if(isempty(g_x))
-    set(hObject,'String','0');
+    set(hObject,'String','950');
 end
 
 % --- Executes during object creation, after setting all properties.
@@ -167,7 +165,7 @@ function goal_y_Callback(hObject, ~, handles)
 
 g_y=str2double(get(hObject, 'string'));
 if(isempty(g_y))
-    set(hObject,'String','0');
+    set(hObject,'String','950');
 end
 
 % --- Executes during object creation, after setting all properties.
@@ -283,16 +281,17 @@ switch map
     case 3
         Obstacles=drawObstacles(3);
     case 4
-        n=0;
         set(handles.addob,'Visible','on')
-        Obstacles=[];
-        while sw1 && sw2
-            sw2=0;
-            disp('M');
-            while getappdata(handles.addob,'Value')
-                disp('O');
-            end
-            n=n+1;
+        
+        %Specify Total number of obstacle here
+        Num_Object=3;
+
+        %Main code starts here
+        hold on;
+        for i=1:Num_Object
+            [~,X,Y] = ginputp;
+            poly=fill(X,Y,'k');
+            Obstacles{i}=struct('Vertices',poly.Vertices,'FaceColor',poly.FaceColor);
         end
 end
 setappdata(handles.make_map,'Obstacles',Obstacles);

@@ -12,7 +12,6 @@ function [pl,out1,out2] = ginputp(arg1)
 %
 %   Examples:
 %       [n,x,y] = ginput;
-%
 %       [n,x,y] = ginput(5);
 %
 %   Copyright 1984-2015 The MathWorks, Inc.

@@ -154,8 +154,8 @@ classdef RRT < handle
         %Checks for collision between pose x and workspace obstacles
         %   Returns 1 if given configuration leads to collision
         flag=0;
-        for Ob=Obstacles
-            if ~isequal(inpolygon(x(1),x(2),Ob.Vertices(:,1),Ob.Vertices(:,2)),zeros(1,length(x(1))));
+        for i=1:length(Obstacles)
+            if ~isequal(inpolygon(x(1),x(2),Obstacles{i}.Vertices(:,1),Obstacles{i}.Vertices(:,2)),zeros(1,length(x(1))));
                 flag=1;
             end
         end

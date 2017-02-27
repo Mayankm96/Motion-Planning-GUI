@@ -10,7 +10,7 @@ __Contributor:__ [Mayank Mittal](http://mayankm96.github.io)
 This repository contains a GUI to test out various motion planning algorithms. The GUI allows you to define your own start and goal locations.
 
 <p align="center">
-<img src="https://github.com/Mayankm96/Motion-Planning-GUI/blob/master/Images/sample_gui.PNG" alt="Sample GUI" height="350">
+<img src="https://github.com/Mayankm96/Motion-Planning-GUI/blob/master/Images/sample_gui_v2.PNG" alt="Sample GUI" height="350">
 </p>
 
 The reference papers used to learn about the algorithms can be found out in the folder 'References'.
@@ -22,6 +22,8 @@ _Note:_ Ensure you have MATLAB installed (for best results, it is preferred to u
 
 2. Add path of this directory typing the command `addpath('<path-to-directory>/GUI')` on the MATLAB command window
 3. Run the file `../GUI/simple_gui.m` to start the interface designed
+
+_Note:_ If option `Custom` chosen to make a map, a button `O` appears. Double click on `O` to exit `Custom` mode.
 
 ## Current Algorithms Available:
 1. Rapidly Exploring Random Tree with one seed at start location
@@ -35,6 +37,6 @@ _Note:_ Ensure you have MATLAB installed (for best results, it is preferred to u
 - Graph-based Algorithm like A*, Crossfire
 
 ### Improve GUI features:
-- Enable creation of obstacles 
+- ---Enable creation of obstacles--- 
 - Improve the stop button
 - Use dropdown list instead of listbox

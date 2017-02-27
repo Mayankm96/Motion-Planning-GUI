@@ -7,6 +7,4 @@ rectangle('Position',[0 0 size size],'EdgeColor','k','LineWidth',3);
 axis([0 size 0 size]); 
 hold on;
 axis square;
-title('Cartesian Workspace');
-
 end

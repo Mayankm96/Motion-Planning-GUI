@@ -1,6 +1,6 @@
 function varargout = simple_gui(varargin)
 % SIMPLE_GUI MATLAB code for simple_gui.fig      
-% Last Modified by GUIDE v2.5 24-Feb-2017 00:30:04
+% Last Modified by GUIDE v2.5 27-Feb-2017 21:45:53
 addpath('Map');
 addpath('RRTree');
 % Begin initialization code - DO NOT EDIT
@@ -193,7 +193,7 @@ if isappdata(handles.pointer_start,'fig')
     delete(n);
 end
 
-[n,x,y]=ginputp(1);
+[n,x,y]=ginputp('og',1);
 set(handles.start_x,'String',num2str(x));
 set(handles.start_y,'String',num2str(y));
 setappdata(handles.pointer_start,'fig',n);
@@ -210,7 +210,7 @@ if isappdata(handles.pointer_goal,'fig')
     delete(n);
 end
 
-[n,x,y]=ginputp(1);
+[n,x,y]=ginputp('or',1);
 set(handles.goal_x,'String',num2str(x));
 set(handles.goal_y,'String',num2str(y));
 setappdata(handles.pointer_goal,'fig',n);
@@ -269,10 +269,9 @@ function make_map_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 map=get(handles.mapper,'Value');
 set(handles.addob,'Visible','off');
+
 cla reset
 workspace(1000);
-sw1=1;
-sw2=1;
 switch map
     case 1
         Obstacles=[];
@@ -281,18 +280,22 @@ switch map
     case 3
         Obstacles=drawObstacles(3);
     case 4
-        set(handles.addob,'Visible','on')
-        
-        %Specify Total number of obstacle here
-        Num_Object=3;
+        set(handles.addob,'Visible','on');
+        setappdata(handles.addob,'Value',0);
+        set(handles.addob,'String','O');
 
-        %Main code starts here
         hold on;
-        for i=1:Num_Object
-            [~,X,Y] = ginputp;
+        i=1;
+        while 1==1
+            [~,X,Y] = ginputp('.k');
             poly=fill(X,Y,'k');
             Obstacles{i}=struct('Vertices',poly.Vertices,'FaceColor',poly.FaceColor);
+            i=i+1;
+            if getappdata(handles.addob,'Value')
+                break;
+            end
         end
+        set(handles.addob,'String','X');
 end
 setappdata(handles.make_map,'Obstacles',Obstacles);
 
@@ -303,3 +306,4 @@ function addob_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 setappdata(handles.addob,'Value',1);
+

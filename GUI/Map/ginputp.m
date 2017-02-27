@@ -1,4 +1,4 @@
-function [pl,out1,out2] = ginputp(arg1)
+function [pl,out1,out2] = ginputp(style,arg1)
 %GINPUTP MODIFIED Graphical input from mouse.
 %   [pl,X,Y] = GINPUT(N) gets N points from the current axes and returns
 %   the X- and Y-coordinates in length N vectors X and Y.  The cursor
@@ -11,8 +11,8 @@ function [pl,out1,out2] = ginputp(arg1)
 %
 %
 %   Examples:
-%       [n,x,y] = ginput;
-%       [n,x,y] = ginput(5);
+%       [n,x,y] = ginput('.');
+%       [n,x,y] = ginput('o',5);
 %
 %   Copyright 1984-2015 The MathWorks, Inc.
 %
@@ -26,16 +26,20 @@ end
 %%    
     % Check Inputs
     if nargin == 0
+        style='o';
         how_many = -1;
-    else
-        how_many = arg1;
-        if  ~isPositiveScalarIntegerNumber(how_many) 
-            error(message('MATLAB:ginput:NeedPositiveInt'))
-        end
-        if how_many == 0
-            % If input argument is equal to zero points,
-            % give a warning and return empty for the outputs.            
-            warning (message('MATLAB:ginput:InputArgumentZero'));
+    else if nargin==1
+            how_many = -1;
+        else
+            how_many = arg1;
+            if  ~isPositiveScalarIntegerNumber(how_many) 
+                error(message('MATLAB:ginput:NeedPositiveInt'))
+            end
+            if how_many == 0
+                % If input argument is equal to zero points,
+                % give a warning and return empty for the outputs.            
+                warning (message('MATLAB:ginput:InputArgumentZero'));
+            end
         end
     end
 %%    
@@ -90,10 +94,10 @@ end
             axes_handle = gca;
             drawnow;
             pt = get(axes_handle, 'CurrentPoint');
-            pl=scatter(pt(1,1),pt(1,2),'ok');
+            pl=scatter(pt(1,1),pt(1,2),style);
             how_many = how_many - 1;
 %%            
-            if(char == 13) % & how_many ~= 0)
+            if(char == 13) || pt(1,1)>1000
                 % if the return key was pressed, char will == 13,
                 % and that's our signal to break out of here whether
                 % or not we have collected all the requested data

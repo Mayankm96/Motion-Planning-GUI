@@ -295,6 +295,7 @@ switch map
                 break;
             end
         end
+        %Obstacles=Obstacles(1,1:(length(Obstacles)-2));
         set(handles.addob,'String','X');
 end
 setappdata(handles.make_map,'Obstacles',Obstacles);

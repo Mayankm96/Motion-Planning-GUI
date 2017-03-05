@@ -1,6 +1,6 @@
 function varargout = simple_gui(varargin)
 % SIMPLE_GUI MATLAB code for simple_gui.fig      
-% Last Modified by GUIDE v2.5 27-Feb-2017 21:45:53
+% Last Modified by GUIDE v2.5 05-Mar-2017 14:57:38
 addpath('Map');
 addpath('RRTree');
 
@@ -42,7 +42,7 @@ guidata(hObject, handles);
 % uiwait(handles.figure1);
 
 % --- Outputs from this function are returned to the command line.
-function varargout = simple_gui_OutputFcn(hObject, ~, handles) 
+function varargout = simple_gui_OutputFcn(~, ~, handles) 
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % ~  reserved - to be defined in a future version of MATLAB
@@ -53,7 +53,7 @@ varargout{1} = handles.output;
 
 
 % --- Executes on button press in stop.
-function stop_Callback(hObject, ~, handles)
+function stop_Callback(~, ~, ~)
 % hObject    handle to stop (see GCBO)
 % ~  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -61,7 +61,7 @@ close(gcbf)
 simple_gui
 
 % --- Executes on button press in start.
-function start_Callback(hObject, ~, handles)
+function start_Callback(~, ~, handles)
 % hObject    handle to start (see GCBO)
 % ~  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -77,20 +77,21 @@ scatter(G(1),G(2),'r','filled');
 
 plan=get(handles.planner,'Value');
 Obstacles=getappdata(handles.make_map,'Obstacles');
+flag=get(handles.show_path,'Value');
 
 switch plan
     case 1
     T=RRT(S,G,20,Obstacles);
-    makeTree(T);
+    makeTree(flag,T);
     
     case 2
     T1=RRT(S,G,20,Obstacles);
-    T2=RRT(G,S,20,Obstalces);
-    makeTree(T1,T2);
+    T2=RRT(G,S,20,Obstacles);
+    makeTree(flag,T1,T2);
 end
 
 % --- Executes during object creation, after setting all properties.
-function workspace_axes_CreateFcn(hObject, ~, handles)
+function workspace_axes_CreateFcn(~, ~, ~)
 % hObject    handle to workspace_axes (see GCBO)
 % ~  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
@@ -98,7 +99,7 @@ function workspace_axes_CreateFcn(hObject, ~, handles)
 %draw workspace_axes with obstacles
 workspace(1000);
 
-function start_x_Callback(hObject, ~, handles)
+function start_x_Callback(hObject, ~, ~)
 % hObject    handle to start_x (see GCBO)
 % ~  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -109,7 +110,7 @@ if(isempty(s_x))
 end
 
 % --- Executes during object creation, after setting all properties.
-function start_x_CreateFcn(hObject, ~, handles)
+function start_x_CreateFcn(hObject, ~, ~)
 % hObject    handle to start_x (see GCBO)
 % ~  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
@@ -118,7 +119,7 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-function start_y_Callback(hObject, ~, handles)
+function start_y_Callback(hObject, ~, ~)
 % hObject    handle to start_y (see GCBO)
 % ~  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -129,7 +130,7 @@ if(isempty(s_y))
 end
 
 % --- Executes during object creation, after setting all properties.
-function start_y_CreateFcn(hObject, ~, handles)
+function start_y_CreateFcn(hObject, ~, ~)
 % hObject    handle to start_y (see GCBO)
 % ~  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
@@ -138,7 +139,7 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-function goal_x_Callback(hObject, ~, handles)
+function goal_x_Callback(hObject, ~, ~)
 % hObject    handle to goal_x (see GCBO)
 % ~  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -149,7 +150,7 @@ if(isempty(g_x))
 end
 
 % --- Executes during object creation, after setting all properties.
-function goal_x_CreateFcn(hObject, ~, handles)
+function goal_x_CreateFcn(hObject, ~, ~)
 % hObject    handle to goal_x (see GCBO)
 % ~  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
@@ -158,7 +159,7 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-function goal_y_Callback(hObject, ~, handles)
+function goal_y_Callback(hObject, ~, ~)
 % hObject    handle to goal_y (see GCBO)
 % ~  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -169,7 +170,7 @@ if(isempty(g_y))
 end
 
 % --- Executes during object creation, after setting all properties.
-function goal_y_CreateFcn(hObject, ~, handles)
+function goal_y_CreateFcn(hObject, ~, ~)
 % hObject    handle to goal_y (see GCBO)
 % ~  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
@@ -182,7 +183,7 @@ end
 
 
 % --- Executes on button press in pointer_start.
-function pointer_start_Callback(hObject, eventdata, handles)
+function pointer_start_Callback(~, ~, handles)
 % hObject    handle to pointer_start (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -199,7 +200,7 @@ set(handles.start_y,'String',num2str(y));
 setappdata(handles.pointer_start,'fig',n);
 
 % --- Executes on button press in pointer_goal.
-function pointer_goal_Callback(hObject, eventdata, handles)
+function pointer_goal_Callback(~, ~, handles)
 % hObject    handle to pointer_goal (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -216,7 +217,7 @@ set(handles.goal_y,'String',num2str(y));
 setappdata(handles.pointer_goal,'fig',n);
 
 % --- Executes on selection change in planner.
-function planner_Callback(hObject, eventdata, handles)
+function planner_Callback(hObject, ~, ~)
 % hObject    handle to planner (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -226,7 +227,7 @@ function planner_Callback(hObject, eventdata, handles)
 plan=get(hObject,'Value');
 
 % --- Executes during object creation, after setting all properties.
-function planner_CreateFcn(hObject, eventdata, handles)
+function planner_CreateFcn(hObject, ~, ~)
 % hObject    handle to planner (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
@@ -239,7 +240,7 @@ end
 
 
 % --- Executes on selection change in mapper.
-function mapper_Callback(hObject, eventdata, handles)
+function mapper_Callback(hObject, ~, ~)
 % hObject    handle to mapper (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -250,7 +251,7 @@ map=get(hObject,'Value');
 
 
 % --- Executes during object creation, after setting all properties.
-function mapper_CreateFcn(hObject, eventdata, handles)
+function mapper_CreateFcn(hObject, ~, ~)
 % hObject    handle to mapper (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
@@ -263,7 +264,7 @@ end
 
 
 % --- Executes on button press in make_map.
-function make_map_Callback(hObject, eventdata, handles)
+function make_map_Callback(~, ~, handles)
 % hObject    handle to make_map (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -302,8 +303,17 @@ setappdata(handles.make_map,'Obstacles',Obstacles);
 
 
 % --- Executes on button press in addob.
-function addob_Callback(hObject, eventdata, handles)
+function addob_Callback(~, ~, handles)
 % hObject    handle to addob (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 setappdata(handles.addob,'Value',1);
+
+
+% --- Executes on button press in show_path.
+function show_path_Callback(hObject, ~, ~)
+% hObject    handle to show_path (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+path=get(hObject,'Value');
+disp(path);

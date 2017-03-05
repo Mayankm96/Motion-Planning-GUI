@@ -19,17 +19,17 @@ classdef RRT < handle
             Tree.radius=r;
             Tree.Obstacles=O;
         end
-        function i=buildTree(Tree,i,fc,pf)
+        function i=buildTree(Tree,i,fc,flag)
         %Builds a tree from the defined start point to goal point
         %   Obstacles is an array of obstacles defined
-        %   pf is Plot Flag which is 1 to see the growing tree
+        %   pf is boolean Flag which is 0 to see the tree expanding
             x_rand=Tree.random_state(1000);
             x_near=Tree.nearest_neighbour(x_rand);
-            [x_new,u]=Tree.new_state(x_rand,x_near,'dense');
+            [x_new,u]=Tree.new_state(x_rand,x_near);
             if ~Tree.isInGraph(x_new)
                 Tree.nodes{i}=x_new;
                 Tree.edges{i-1}={x_near,u,x_new};
-                if pf==1
+                if flag==0
                     plot([x_new(1); x_near(1)],[x_new(2); x_near(2)],fc)
                     hold on
                     pause(0.005);
@@ -89,8 +89,6 @@ classdef RRT < handle
                         Tree1.nodes{k+1}=Tree1.goal;
                         u=[1, fulltan(x1(2)-x2(2),x1(1)-x2(1))];
                         Tree1.edges{k}={x1,u,Tree1.goal};
-                        
-                        disp('Connected');
                     end
                 end
             end
@@ -98,7 +96,7 @@ classdef RRT < handle
     end
     
     methods (Access=private)
-        function [x_new,u]= new_state(Tree,x_rand,x_near,mode)
+        function [x_new,u]= new_state(Tree,x_rand,x_near)
         %Used to generate a new state from a given state xi
         %   Since we are doing holonmic planning \dot(x)=f(x,u)=u 
         %   This allows new state to be generated in any direction
@@ -115,10 +113,8 @@ classdef RRT < handle
                 i=i+1;
             end
             u=[norm(x_new-x_near), fulltan(x_new(2)-x_near(2),x_new(1)-x_near(1))];
-            if isequal(mode,'dense')
-                if u(1)>Tree.radius
-                    u(1)=Tree.radius;
-                end
+            if u(1)>Tree.radius
+                u(1)=Tree.radius;
             end
             x_new=x_near+[u(1)*cos(u(2));u(1)*sin(u(2))];
         end

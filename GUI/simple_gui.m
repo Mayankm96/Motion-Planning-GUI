@@ -316,4 +316,3 @@ function show_path_Callback(hObject, ~, ~)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 path=get(hObject,'Value');
-disp(path);

@@ -3,6 +3,7 @@ function varargout = simple_gui(varargin)
 % Last Modified by GUIDE v2.5 05-Mar-2017 14:57:38
 addpath('Map');
 addpath('RRTree');
+addpath('PRM');
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -22,7 +23,6 @@ else
     gui_mainfcn(gui_State, varargin{:});
 end
 % End initialization code - DO NOT EDIT
-
 
 % --- Executes just before simple_gui is made visible.
 function simple_gui_OpeningFcn(hObject, ~, handles, varargin)
@@ -57,8 +57,11 @@ function stop_Callback(~, ~, ~)
 % hObject    handle to stop (see GCBO)
 % ~  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-close(gcbf)
-simple_gui
+set(0,'showhiddenhandles','on');    % Make the GUI figure handle visible
+h=findobj(gcf,'type','axes');       % Find the axes object in the GUI
+f=figure;                           % Open a new figure with handle f
+s=copyobj(h,f);                    % Copy axes object h into figure f
+axis equal;
 
 % --- Executes on button press in start.
 function start_Callback(~, ~, handles)
@@ -74,7 +77,7 @@ G=[gx;gy];
 % Mark start and goal positions
 scatter(S(1),S(2),'g','filled');
 scatter(G(1),G(2),'r','filled');
-
+pause(0.005);
 plan=get(handles.planner,'Value');
 Obstacles=getappdata(handles.make_map,'Obstacles');
 flag=get(handles.show_path,'Value');
@@ -82,12 +85,16 @@ flag=get(handles.show_path,'Value');
 switch plan
     case 1
     T=RRT(S,G,20,Obstacles);
-    makeTree(flag,T);
-    
+    T.makeTree('b',flag);
+
     case 2
     T1=RRT(S,G,20,Obstacles);
     T2=RRT(G,S,20,Obstacles);
-    makeTree(flag,T1,T2);
+    T1.makeTree('g',flag,T2,'r');
+    
+    case 3
+    M=PRM(S,G,20,Obstacles);
+    M.makePRM('m',flag);
 end
 
 % --- Executes during object creation, after setting all properties.

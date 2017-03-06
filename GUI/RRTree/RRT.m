@@ -19,6 +19,52 @@ classdef RRT < handle
             Tree.radius=r;
             Tree.Obstacles=O;
         end
+        function makeTree(T1,fc1,flag,T2,fc2)
+        %Runs the iterations to form the trees
+        %   flag is boolean variable. If flag=1 means only final path has to be
+        %   shown and not the growing tree
+        fl=0;
+        if nargin==3
+            i=2;
+            while i<10000
+                i=T1.buildTree(i,fc1,flag);
+                if T1.hasReachedGoal
+                    T1.showPath(fc1);
+                    fl=1;
+                end
+                if fl==1
+                    break;
+                end
+                i=i+1;
+            end
+        elseif  nargin==5
+            i=2;
+            j=2;
+            while i<10000
+                i=T1.buildTree(i,fc1,flag);
+                j=T2.buildTree(j,fc2,flag);
+                T2=T1.connect(T2);
+                if T1.hasReachedGoal
+                    T1.showPath(fc1);
+                    fl=1;
+                end
+                if T2.hasReachedGoal
+                    T2.showPath(fc2);
+                    fl=1;
+                end
+                if fl==1
+                    break;
+                end
+                i=i+1;
+                j=j+1;
+            end
+        else
+            error('Insufficient arguments to grow the Tree');
+        end
+        end
+    end
+    
+    methods (Access=private) 
         function i=buildTree(Tree,i,fc,flag)
         %Builds a tree from the defined start point to goal point
         %   Obstacles is an array of obstacles defined
@@ -37,21 +83,6 @@ classdef RRT < handle
             else
                 i=i-1;
             end
-        end
-        function showPath(Tree,fc)
-        %Displays path from given state back to the start
-        %   S: Start point
-        %   edges: list of all edges of graph {x_i, u, x_i+1}
-        i=length(Tree.edges);
-        x=Tree.goal;
-        while x~=Tree.start
-            if Tree.edges{i}{3}==x
-                xs=Tree.edges{i}{1};
-                plot([xs(1); x(1)],[xs(2); x(2)],fc,'LineWidth',3);
-                x=xs;
-            end
-            i=i-1;
-        end
         end
         function flag = hasReachedGoal(Tree)
         %Checks whether the state reached is within a bounded region around goal
@@ -93,9 +124,21 @@ classdef RRT < handle
                 end
             end
         end
-    end
-    
-    methods (Access=private)
+        function showPath(Tree,fc)
+        %Displays path from given state back to the start
+        %   S: Start point
+        %   edges: list of all edges of graph {x_i, u, x_i+1}
+        i=length(Tree.edges);
+        x=Tree.goal;
+        while x~=Tree.start
+            if Tree.edges{i}{3}==x
+                xs=Tree.edges{i}{1};
+                plot([xs(1); x(1)],[xs(2); x(2)],fc,'LineWidth',3);
+                x=xs;
+            end
+            i=i-1;
+        end
+        end
         function [x_new,u]= new_state(Tree,x_rand,x_near)
         %Used to generate a new state from a given state xi
         %   Since we are doing holonmic planning \dot(x)=f(x,u)=u 

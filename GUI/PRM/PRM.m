@@ -91,7 +91,6 @@ classdef PRM < handle
                  break;
              end
              openSet=[openSet(1:index-1,:); openSet(index+1:end,:)];        % remove current from openSet
-             closedSet=[closedSet; current];                                % update closed lists
              
              for in=1:length(RoadMap.edges{current(1)})                     %iterate through all edges from the node
                  nb_index=RoadMap.edges{current(1)}(in);
@@ -100,15 +99,16 @@ classdef PRM < handle
                      tentative_historicCost=current(3)+historicCost;
 
                      if any(openSet(:,1)==nb_index)
-                        index=find(openSet(:,1)==nb_index);
-                        if openSet(index,3)<tentative_historicCost
+                        index= openSet(:,1)==nb_index;
+                        if openSet(index,3)<=tentative_historicCost
                             continue;
                         end
                      else
                          totalCost=tentative_historicCost+RoadMap.heuristic(RoadMap.nodes(nb_index,:));
-                         openSet=[openSet; nb_index, totalCost, tentative_historicCost, current(1)];
+                         openSet=[openSet; nb_index, totalCost, tentative_historicCost, size(closedSet,1)+1];
                      end
-                 end           
+                 end
+                  closedSet=[closedSet; current];                                % update closed lists
              end
         end
         

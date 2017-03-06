@@ -106,8 +106,6 @@ classdef RRT < handle
                 for j=1:length(Tree2.nodes)
                     x2=Tree2.nodes{j};
                     if norm(x1-x2)<Tree1.radius 
-                        %Tree2=Tree1.copy2Tree(Tree2,i);
-                        %Tree1=Tree2.copy2Tree(Tree1,j);
                         Tree1.goal=x2;
                         Tree2.goal=x1;
                         % Add connecting branch on Tree2

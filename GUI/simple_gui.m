@@ -1,6 +1,30 @@
+% The MIT License
+% 
+% Copyright (c) 2017 Mayank Mittal
+% 
+% Permission is hereby granted, free of charge, to any person obtaining a copy
+% of this software and associated documentation files (the "Software"), to deal
+% in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+% 
+% The above copyright notice and this permission notice shall be included in
+% all copies or substantial portions of the Software.
+% 
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+% THE SOFTWARE.
+
 function varargout = simple_gui(varargin)
 % SIMPLE_GUI MATLAB code for simple_gui.fig      
 % Last Modified by GUIDE v2.5 05-Mar-2017 14:57:38
+
+% Adding path to directories
 addpath('Map');
 addpath('RRTree');
 addpath('PRM');
@@ -62,6 +86,7 @@ h=findobj(gcf,'type','axes');       % Find the axes object in the GUI
 f=figure;                           % Open a new figure with handle f
 s=copyobj(h,f);                    % Copy axes object h into figure f
 axis equal;
+clc;
 
 % --- Executes on button press in start.
 function start_Callback(~, ~, handles)
@@ -93,7 +118,7 @@ switch plan
     T1.makeTree('g',flag,T2,'r');
     
     case 3
-    M=PRM(S,G,20,Obstacles);
+    M=PRM(S,G,50,Obstacles);
     M.makePRM('m',flag);
 end
 

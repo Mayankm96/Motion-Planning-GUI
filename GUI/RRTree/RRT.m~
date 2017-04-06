@@ -93,16 +93,14 @@ classdef RRT < handle
         %   pf is boolean Flag which is 0 to see the tree expanding
             x_rand=Tree.random_state(1000);
             x_near=Tree.nearest_neighbour(x_rand);
-            if Tree.isPathClear(x_rand, x_near)
-                [x_new,u]=Tree.new_state(x_rand,x_near);
-                if ~Tree.isInGraph(x_new)
-                    Tree.nodes{i}=x_new;
-                    Tree.edges{i-1}={x_near,u,x_new};
-                    if flag==0
-                        plot([x_new(1); x_near(1)],[x_new(2); x_near(2)],fc)
-                        hold on
-                        pause(0.005);
-                    end
+            [x_new,u]=Tree.new_state(x_rand,x_near);
+            if ~Tree.isInGraph(x_new)
+                Tree.nodes{i}=x_new;
+                Tree.edges{i-1}={x_near,u,x_new};
+                if flag==0
+                    plot([x_new(1); x_near(1)],[x_new(2); x_near(2)],fc)
+                    hold on
+                    pause(0.005);
                 end
             else
                 i=i-1;

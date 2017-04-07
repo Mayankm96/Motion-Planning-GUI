@@ -28,6 +28,7 @@ function varargout = simple_gui(varargin)
 addpath('Map');
 addpath('RRTree');
 addpath('PRM');
+addpath('Potential');
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -120,6 +121,9 @@ switch plan
     case 3
     M=PRM(S,G,50,Obstacles);
     M.makePRM('m',flag);
+
+    case 4
+    potential(S,G,Obstacles);
 end
 
 % --- Executes during object creation, after setting all properties.
@@ -328,7 +332,7 @@ switch map
                 break;
             end
         end
-        %Obstacles=Obstacles(1,1:(length(Obstacles)-2));
+        Obstacles=Obstacles(1,1:(length(Obstacles)-2));
         set(handles.addob,'String','X');
 end
 setappdata(handles.make_map,'Obstacles',Obstacles);

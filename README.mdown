@@ -37,8 +37,7 @@ _Note:_ Ensure you have MATLAB installed (for best results, it is preferred to u
 
 ### Algorithms to be added:
 - <s>Probabilistic Road Map</s>
-- <s>Potential Method</s?
-- Bug Tangent Algorithm
+- <s>Potential Method</s>
 - Graph-based Algorithm like A*, Crossfire
 
 ### Improve GUI features:

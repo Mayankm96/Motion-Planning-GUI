@@ -31,16 +31,17 @@ _Note:_ Ensure you have MATLAB installed (for best results, it is preferred to u
 1. Rapidly Exploring Random Tree __(with one seed at start location)__
 2. Bi- Directional Rapidly Exploring Random Tree __(one seed each at start and goal location)__
 3. Basic Probabilistic Road Map (PRM) __(with A* algorithm for shortest path search)__
+4. Potential Field Method
 
 ## Todos:
 
 ### Algorithms to be added:
 - <s>Probabilistic Road Map</s>
-- Potential Method
+- <s>Potential Method</s?
 - Bug Tangent Algorithm
 - Graph-based Algorithm like A*, Crossfire
 
 ### Improve GUI features:
 - <s>Enable creation of obstacles</s> 
 - Improve the stop button
-- Use dropdown list instead of listbox
+- <s>Use dropdown list instead of listbox</s>

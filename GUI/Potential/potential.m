@@ -49,7 +49,7 @@ while true
     else
         X = X + step_size*Grad;
     end
-    scatter(X(1), X(2),'b');
+    plot(X(1), X(2),'ob','MarkerSize',2, 'MarkerEdgeColor','b');
     disp(X);
     pause(0.005);
 
